@@ -1,70 +1,62 @@
-# Getting Started with Create React App
+# AirBnb Copy
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## About
 
-## Available Scripts
+This project is meant to be a copy of the AirBnb landing page. I made this project in order to exercise more the power of state in React and to understand the usability of components and how I can reuse them. 
 
-In the project directory, you can run:
+## Components
 
-### `npm start`
+### Navbar
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+The navbar is a simple component with just an image element for the AirBnb logo.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+ 
 
-### `npm test`
+### Hero
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The hero components consist of a hero image and a short description of what you can do on the website.
 
-### `npm run build`
+### Card
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The card component is the most extensive one. It has a basic template for the card that will get data with the help of props and achive reusability. Also there is some logic that creates a badge with the purpose of showing the user if the experince is either sold out or online. 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```jsx
+let badgeText;
+    if (props.openSpots === 0) {
+        badgeText = "SOLD OUT";
+    } else if (props.location === "Online") {
+        badgeText = "ONLINE"
+    }
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Data
 
-### `npm run eject`
+I’ve put all the data that the application needs in a separate file called “data.js”. I did this in order to be easier to reuse code, such as the Card component and to be easier and quicker to change data in case of that need.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```jsx
+{
+        id: 1,
+        title: "Life Lessons with Katie Zaferes",
+        description: "I will share with you what I call \"Positively Impactful Moments of Disappointment.\" Throughout my career, many of my highest moments only came after setbacks and losses. But learning from those difficult moments is what gave me the ability to rise above them and reach my goals.",
+        price: 136,
+        coverImg: "swimmer1.jpg",
+        stats: {
+            rating: 5.0,
+            reviewCount: 6
+        },
+        location: "Online",
+        openSpots: 0,
+    }
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## App.js
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+In App.js I called the .map function in order to map over my data in  “data.js” and put the information into the Card component. As a result I’ve made my code reusable and I could add as many Card components I want by just adding more JSON into the “dat.js” file.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```jsx
+const cardElements = data.map(value => {
+    return <Card 
+      key={value.id}
+      {...value}
+  /> }
+```
